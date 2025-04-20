@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>home</title>
+  <title>gallery</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -218,6 +218,15 @@
       border-radius: 10px;
     }
 
+    .response-img {
+      max-width: 70%;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+      border-radius: 10px;
+      border: 8px solid black;
+    }
+
     .aboutme {
       font-size: 30px;
       text-align: center;
@@ -271,9 +280,19 @@
       </div>
     </div>
 
-    <button onclick="location.href='gallery.html'">
-      <span class="material-icons">photo</span> GALLERY
-    </button>
+    <!-- GALLERY Dropdown -->
+    <div class="dropdown">
+      <button class="dropdown-toggle">
+        <span class="material-icons">photo</span> GALLERY
+        <span class="material-icons">expand_more</span>
+      </button>
+      <div class="dropdown-menu">
+        <a href="#mandala"><b>Mandala Art</b></a>
+        <a href="#oilpastels"><b>Oil Pastels</b></a>
+        <a href="#paintings"><b>Paintings</b></a>
+      </div>
+    </div>
+
     <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })">
       <span class="material-icons">contact_mail</span> CONTACT
     </button>
@@ -297,41 +316,49 @@
     </div>
   </div>
 
-  <button onclick="location.href='gallery.html'">
-    <span class="material-icons">photo</span> GALLERY
-  </button>
+  <!-- GALLERY Dropdown in Sidebar -->
+  <div class="sidebar-dropdown">
+    <button class="sidebar-toggle" onclick="toggleSidebarGallerySubmenu()">
+      <span class="material-icons">photo</span> GALLERY
+      <span class="material-icons">expand_more</span>
+    </button>
+    <div class="sidebar-submenu" id="sidebarGallerySubmenu">
+      <a href="#mandala">Mandala Art</a>
+      <a href="#oilpastels">Oil Pastels</a>
+      <a href="#paintings">Paintings</a>
+    </div>
+  </div>
+
   <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })">
     <span class="material-icons">contact_mail</span> CONTACT
   </button>
 </div>
 
 <!-- Main Content -->
-<img src="i1.png" alt="my_name" class="responsive-img">
-
-<hr color="#d4b1f6" size="1px"><br>
-<hr color="#c287fb" size="3px"><br>
-<hr color="#8b21f2" size="5px"><br>
-<hr color="#701ac3" size="7px"><br>
-<hr color="#5c2592" size="9px"><br>
-<hr color="#3c0474" size="11px"><br>
-<hr color="#250441" size="13px"><br>
-
-<h1 id="about-me" class="aboutme">ABOUT ME</h1>
-<h6 class="des">I am an aspiring Computer Engineer, studying in Fr. Conceciao Rodrigues College of Engineering. I am really passionate about music and art & have a great interest in learning about the Space too. To view my work, explore the website!!!</h6>
+<img src="i6.png" alt="art_gallery" class="responsive-img">
+<h1 id="mandala" align="center">MANDALA ART</h1>
+<img src="i7.jpg" alt="mandala1" class="response-img">
+<img src="i8.jpg" alt="mandala2" class="response-img">
+<h1 id="oilpastels" align="center">OIL PASTEL</h1>
+<img src="i9.jpg" alt="oilpastel1" class="response-img">
+<img src="i10.jpg" alt="oilpastel2" class="response-img">
+<h1 id="paintings" align="center">PAINTINGS</h1>
+<img src="i11.jpg" alt="painting1" class="response-img">
+<img src="i12.jpg" alt="painting2" class="response-img">
+<img src="i13.jpg" alt="painting3" class="response-img">
 
 <!-- CONTACT SECTION -->
 <section id="contact" style="padding: 80px 20px; background-color: #2a2a3e; color: white; text-align: center;">
   <h4 style="font-size: 25px; margin-bottom: 20px;">Contact Details</h4>
-
   <div style="max-width: 600px; margin: 0 auto; font-size:19px">
-    <p><strong>Email:</strong> <a href="sploasian3110@gmail.com" style="color: #7ed6df;">sploasian3110@gmail.com</a></p><br><br>
+    <p><strong>Email:</strong> <a href="mailto:sploasian3110@gmail.com" style="color: #7ed6df;">sploasian3110@gmail.com</a></p><br><br>
     <p style="font-size:12px">© 2025 Noella Pereira. All rights reserved.
   </div>
 </section>
 
 <!-- Scripts -->
 <script>
-  const colors = ['#d4b1f6', '#c287fb', '#8b21f2', '#701ac3', '#5c2592', '#3c0474', '#250441'];
+  const colors = ['#f94a5a', '#ea1528', '#b10817'];
   let index = 0;
   function changeBackgroundColor() {
     document.body.style.backgroundColor = colors[index];
@@ -367,6 +394,11 @@
     submenu.classList.toggle('open');
   }
 
+  function toggleSidebarGallerySubmenu() {
+    const submenu = document.getElementById('sidebarGallerySubmenu');
+    submenu.classList.toggle('open');
+  }
+
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon = document.getElementById('themeIcon');
   const root = document.documentElement;
@@ -385,12 +417,11 @@
     }
   });
 
-window.addEventListener('DOMContentLoaded', (event) => {
-  if (window.location.hash) {
-    history.replaceState(null, null, window.location.pathname);
-  }
-});
-
+  window.addEventListener('DOMContentLoaded', (event) => {
+    if (window.location.hash) {
+      history.replaceState(null, null, window.location.pathname);
+    }
+  });
 </script>
 </body>
 </html>
