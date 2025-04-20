@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #1a1a2e;
+      --bg-light: #f4f4f4;
+      --text-dark: #fff;
+      --text-light: #111;
+      --btn-color: #2980b9;
+      --btn-hover: #5dade2;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      transition: background-color 1s ease, color 0.3s ease;
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+      font-size: 2rem;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--bg-dark);
+      padding: 15px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 200;
+    }
+
+    .navbar .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: inherit;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 30px;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-buttons button,
+    .dropdown-toggle {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--btn-color);
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .nav-buttons button:hover,
+    .dropdown-toggle:hover {
+      background-color: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple-animation 0.6s linear;
+      background-color: rgba(255, 255, 255, 0.7);
+      pointer-events: none;
+    }
+
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      background-color: #2c2c3c;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      min-width: 180px;
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    }
+
+    .dropdown-menu a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      display: block;
+      transition: background 0.3s;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #3d3d5c;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 250px;
+      height: 100%;
+      background-color: var(--bg-dark);
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 80px 20px;
+      gap: 15px;
+      display: flex;
+      transition: left 0.3s ease;
+      z-index: 150;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-dropdown {
+      width: 100%;
+    }
+
+    .sidebar-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      padding: 10px 0;
+      width: 100%;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .sidebar-submenu {
+      max-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      margin-left: 20px;
+      margin-top: 5px;
+      transition: max-height 0.4s ease;
+    }
+
+    .sidebar-submenu.open {
+      max-height: 300px;
+    }
+
+    .sidebar-submenu a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin: 5px 0;
+      padding: 5px;
+    }
+
+    .theme-toggle {
+      cursor: pointer;
+      font-size: 24px;
+      background: none;
+      border: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .responsive-img {
+      max-width: 90%;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+      border-radius: 10px;
+    }
+
+    .aboutme {
+      font-size: 30px;
+      text-align: center;
+    }
+
+    .des {
+      font-size: 18px;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-buttons {
+        display: none;
+      }
+      .hamburger {
+        display: block;
+      }
+      .aboutme {
+        font-size: 22px;
+      }
+      .des {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="logo">MySite</div>
+  <button class="theme-toggle" id="themeToggle">
+    <span class="material-icons" id="themeIcon">dark_mode</span>
+  </button>
+  <span class="material-icons hamburger" id="hamburger">menu</span>
+
+  <div class="nav-buttons" id="navButtons">
+    <button onclick="location.href='home.html'">
+      <span class="material-icons">home</span> HOME
+    </button>
+
+    <div class="dropdown">
+      <button class="dropdown-toggle">
+        <span class="material-icons">info</span> ABOUT
+        <span class="material-icons">expand_more</span>
+      </button>
+      <div class="dropdown-menu">
+        <a href="#about-me"><b>ABOUT ME</b></a>
+        <a href="interests.html"><b>INTERESTS</b></a>
+      </div>
+    </div>
+
+    <button onclick="location.href='gallery.html'">
+      <span class="material-icons">photo</span> GALLERY
+    </button>
+    <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })">
+      <span class="material-icons">contact_mail</span> CONTACT
+    </button>
+  </div>
+</nav>
+
+<!-- Sidebar for mobile -->
+<div class="sidebar" id="sidebar">
+  <button onclick="location.href='home.html'">
+    <span class="material-icons">home</span> HOME
+  </button>
+
+  <div class="sidebar-dropdown">
+    <button class="sidebar-toggle" onclick="toggleSidebarSubmenu()">
+      <span class="material-icons">info</span> ABOUT
+      <span class="material-icons">expand_more</span>
+    </button>
+    <div class="sidebar-submenu" id="sidebarSubmenu">
+      <a href="#about-me">ABOUT ME</a>
+      <a href="#interests">INTERESTS</a>
+    </div>
+  </div>
+
+  <button onclick="location.href='gallery.html'">
+    <span class="material-icons">photo</span> GALLERY
+  </button>
+  <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })">
+    <span class="material-icons">contact_mail</span> CONTACT
+  </button>
+</div>
+
+<!-- Main Content -->
+<img src="i1.png" alt="my_name" class="responsive-img">
+
+<hr color="#d4b1f6" size="1px"><br>
+<hr color="#c287fb" size="3px"><br>
+<hr color="#8b21f2" size="5px"><br>
+<hr color="#701ac3" size="7px"><br>
+<hr color="#5c2592" size="9px"><br>
+<hr color="#3c0474" size="11px"><br>
+<hr color="#250441" size="13px"><br>
+
+<h1 id="about-me" class="aboutme">ABOUT ME</h1>
+<h6 class="des">I am an aspiring Computer Engineer, studying in Fr. Conceciao Rodrigues College of Engineering. I am really passionate about music and art & have a great interest in learning about the Space too. To view my work, explore the website!!!</h6>
+
+<!-- CONTACT SECTION -->
+<section id="contact" style="padding: 80px 20px; background-color: #2a2a3e; color: white; text-align: center;">
+  <h4 style="font-size: 25px; margin-bottom: 20px;">Contact Details</h4>
+
+  <div style="max-width: 600px; margin: 0 auto; font-size:19px">
+    <p><strong>Email:</strong> <a href="sploasian3110@gmail.com" style="color: #7ed6df;">sploasian3110@gmail.com</a></p><br><br>
+    <p style="font-size:12px">© 2025 Noella Pereira. All rights reserved.
+  </div>
+</section>
+
+<!-- Scripts -->
+<script>
+  const colors = ['#d4b1f6', '#c287fb', '#8b21f2', '#701ac3', '#5c2592', '#3c0474', '#250441'];
+  let index = 0;
+  function changeBackgroundColor() {
+    document.body.style.backgroundColor = colors[index];
+    index = (index + 1) % colors.length;
+  }
+  changeBackgroundColor();
+  setInterval(changeBackgroundColor, 1000);
+
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(button => {
+    button.addEventListener('click', function (e) {
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      this.appendChild(ripple);
+      const rect = this.getBoundingClientRect();
+      ripple.style.left = `${e.clientX - rect.left}px`;
+      ripple.style.top = `${e.clientY - rect.top}px`;
+      ripple.style.width = ripple.style.height = Math.max(this.offsetWidth, this.offsetHeight) + 'px';
+      ripple.addEventListener('animationend', () => {
+        ripple.remove();
+      });
+    });
+  });
+
+  const hamburger = document.getElementById('hamburger');
+  const sidebar = document.getElementById('sidebar');
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+  });
+
+  function toggleSidebarSubmenu() {
+    const submenu = document.getElementById('sidebarSubmenu');
+    submenu.classList.toggle('open');
+  }
+
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const root = document.documentElement;
+  themeToggle.addEventListener('click', () => {
+    const isDark = document.body.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.body.setAttribute('data-theme', 'light');
+      themeIcon.textContent = 'light_mode';
+      root.style.setProperty('--bg-dark', '#ffffff');
+      root.style.setProperty('--text-dark', '#111');
+    } else {
+      document.body.setAttribute('data-theme', 'dark');
+      themeIcon.textContent = 'dark_mode';
+      root.style.setProperty('--bg-dark', '#1a1a2e');
+      root.style.setProperty('--text-dark', '#fff');
+    }
+  });
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  if (window.location.hash) {
+    history.replaceState(null, null, window.location.pathname);
+  }
+});
+
+</script>
+</body>
+</html>
